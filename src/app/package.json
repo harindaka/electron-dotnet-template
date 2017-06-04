@@ -1,0 +1,42 @@
+{
+  "name": "electron-dotnet",
+  "version": "1.0.0",
+  "description": "cross-platform-desktop",
+  "author": "",
+  "repository": "",
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^1.6.10",
+    "electron-builder": "^18.3.5"
+  },
+  "dependencies": {
+    "angular": "^1.6.1"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "electron-dotnet",
+    "directories": {
+      "buildResources": "../../assets",
+      "output": "../../dist"
+    },
+    "extraResources": {
+      "from": "../api/bin/dist/",
+      "to": "api/bin/dist/",
+      "filter": [
+        "**/*"
+      ]
+    },
+    "mac": {
+      "category": "electron-dotnet"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
+  },
+  "license": "MIT"
+}
