@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+echo "*********************************************************************"
+echo "Removing dependency and build output folders..."
+echo "*********************************************************************"
+echo ""
+rm -rf src/api/bin/
+rm -rf src/api/obj/
+rm -rf src/app/node_modules/
+
+echo ""
+echo "*********************************************************************"
+echo "Executing dotnet clean..."
+echo "*********************************************************************"
+echo ""
+echo $(cd src/api && dotnet clean)
+
+echo ""
+echo "*********************************************************************"
+echo "Script execution completed."
+echo "*********************************************************************"
+echo ""
+
