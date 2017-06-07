@@ -60,11 +60,19 @@ app.on('activate', function () {
 function loadApi(){
   var edge = require('electron-edge');
 
-  var helloWorld = edge.func(`
+  var cSharpSource = `
       async (input) => { 
+          api.Controllers.ContactsController c = new api.Controllers.ContactsController();
           return ".NET Welcomes " + input.ToString(); 
       }
-  `);
+  `
+  
+  var apiAssembly = path.join(__dirname, '\\resources\\api\\api.dll');
+  console.log(apiAssembly);
+  var helloWorld = edge.func({
+    source: cSharpSource,
+    references: [ apiAssembly ]
+  });
 
   helloWorld('JavaScript', function (error, result) {
     if (error) throw error;
