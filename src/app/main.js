@@ -38,7 +38,7 @@ function createWindow () {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 // app.on('ready', createWindow)
-app.on('ready', startApi);
+app.on('ready', loadApi);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -56,9 +56,25 @@ app.on('activate', function () {
     createWindow()
   }
 })
+
+function loadApi(){
+  var edge = require('electron-edge');
+
+  var helloWorld = edge.func(`
+      async (input) => { 
+          return ".NET Welcomes " + input.ToString(); 
+      }
+  `);
+
+  helloWorld('JavaScript', function (error, result) {
+    if (error) throw error;
+    console.log(result);
+  });
+}
+
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-
 const os = require('os');
 var apiProcess = null;
 
@@ -73,10 +89,11 @@ function startApi() {
   else{
     apiAssembly = path.join(__dirname, '/resources/api/api.dll');
     apiProcess = exec('dotnet ' + '"' + apiAssembly + '"');
-  }  
+  }
 
   apiProcess.stdout.on('data', (data) => {
     writeLog(`stdout: ${data}`);
+    
     if (mainWindow == null) {
       createWindow();
     }
