@@ -23,8 +23,8 @@
       "output": "../../dist"
     },
     "extraResources": {
-      "from": "../api/bin/dist/",
-      "to": "api/bin/dist/",
+      "from": "../api/bin/",
+      "to": "api/",
       "filter": [
         "**/*"
       ]

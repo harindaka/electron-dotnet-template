@@ -63,13 +63,17 @@ const os = require('os');
 var apiProcess = null;
 
 function startApi() {
-  var proc = require('child_process').spawn;
+  var exec = require('child_process').exec;
   //  run server
-  var apipath = path.join(__dirname, '..\\api\\bin\\dist\\win\\api.exe')
-  if (os.platform() === 'darwin') {
-    apipath = path.join(__dirname, '..//api//bin//dist//osx//Api')
+  var apiStartScript = null;
+  if (os.platform() === 'win32') {
+    apiAssembly = path.join(__dirname, '\\resources\\api\\api.dll');
+    apiProcess = exec('"C:\\projects\\apps\\cmder\\vendor\\dotnet\\dotnet.exe" ' + '"' + apiAssembly + '"');
   }
-  apiProcess = proc(apipath)
+  else{
+    apiAssembly = path.join(__dirname, '/resources/api/api.dll');
+    apiProcess = exec('dotnet ' + '"' + apiAssembly + '"');
+  }  
 
   apiProcess.stdout.on('data', (data) => {
     writeLog(`stdout: ${data}`);
